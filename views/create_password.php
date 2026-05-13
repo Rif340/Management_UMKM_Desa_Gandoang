@@ -1,19 +1,21 @@
-<?php session_start(); ?>
+<?php session_start();
+if (!isset($_SESSION['otp_verified'])) { header('Location: register.php'); exit; }
+?>
 <?php include 'layouts/navbar.php'; ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masuk - UMKM Gandoang</title>
+    <title>Buat Password - UMKM Gandoang</title>
     <style>
         body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; }
         .main { flex: 1; background: url('../asset/images/bg-desa.png') center/cover no-repeat; display: flex; justify-content: center; align-items: center; padding: 2rem; }
         .card { background: white; border-radius: 16px; padding: 2.5rem; width: 100%; max-width: 420px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        .card .logo { text-align: center; margin-bottom: 0.5rem; }
+        .card .logo { text-align: center; }
         .card .logo span { font-size: 0.7rem; font-weight: 600; letter-spacing: 2px; color: #2d5a3f; display: block; }
         .card .logo h2 { font-size: 1.6rem; color: #2d5a3f; margin: 0; }
-        .card h1 { text-align: center; font-size: 1.4rem; color: #2d5a3f; margin: 0.8rem 0 0.3rem; }
+        .card h1 { text-align: center; font-size: 1.4rem; color: #2d5a3f; margin: 1rem 0 0.3rem; }
         .card .subtitle { text-align: center; font-size: 0.8rem; color: #666; margin-bottom: 1.5rem; }
         .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.4rem; }
@@ -21,12 +23,9 @@
         .input-wrap input { border: none; outline: none; flex: 1; font-size: 0.9rem; font-family: 'Poppins', sans-serif; }
         .input-wrap .icon { color: #999; font-size: 1.1rem; }
         .toggle-pw { cursor: pointer; color: #999; border: none; background: none; font-size: 1.1rem; }
-        .help-link { display: block; font-size: 0.8rem; color: #333; margin-top: 0.4rem; text-decoration: none; }
+        .hint { font-size: 0.75rem; color: #2d5a3f; margin-top: 0.4rem; }
         .btn-submit { width: 100%; padding: 0.8rem; background: #2d5a3f; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 1rem; font-family: 'Poppins', sans-serif; }
         .btn-submit:hover { background: #1e3d2b; }
-        .forgot { display: block; text-align: center; margin-top: 0.8rem; font-size: 0.85rem; color: #333; text-decoration: underline; }
-        .register-link { text-align: center; margin-top: 1.2rem; font-size: 0.85rem; color: #666; }
-        .register-link a { color: #2d5a3f; font-weight: 600; text-decoration: underline; }
         .error-msg { background: #ffe0e0; color: #c00; padding: 0.6rem; border-radius: 6px; font-size: 0.8rem; margin-bottom: 1rem; text-align: center; }
     </style>
 </head>
@@ -34,44 +33,39 @@
     <div class="main">
         <div class="card">
             <div class="logo"><img src="../asset/images/logo.png" alt="UMKM Gandoang" style="height:60px;"></div>
-            <h1>Selamat Datang!</h1>
-            <p class="subtitle">Masuk untuk mengelola usaha UMKM Anda dengan lebih mudah</p>
-
-            <?php if (isset($_SESSION['success'])): ?>
-                <div style="background:#e0ffe0;color:#060;padding:0.6rem;border-radius:6px;font-size:0.8rem;margin-bottom:1rem;text-align:center;"><?= htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?></div>
-            <?php endif; ?>
+            <h1>Buat Password</h1>
+            <p class="subtitle">Buat password untuk akun Anda</p>
 
             <?php if (isset($_SESSION['error'])): ?>
                 <div class="error-msg"><?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?></div>
             <?php endif; ?>
 
-            <form action="../proses/proses_login.php" method="POST">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <div class="input-wrap">
-                        <span class="icon">&#128100;</span>
-                        <input type="email" name="email" id="email" placeholder="Masukkan Email" required>
-                    </div>
-                </div>
+            <form action="../proses/proses_create_password.php" method="POST">
                 <div class="form-group">
                     <label for="password">Kata Sandi</label>
                     <div class="input-wrap">
                         <span class="icon">&#128274;</span>
                         <input type="password" name="password" id="password" placeholder="Masukkan Kata Sandi" required>
-                        <button type="button" class="toggle-pw" onclick="togglePassword()">&#128065;</button>
+                        <button type="button" class="toggle-pw" onclick="toggle('password')">&#128065;</button>
                     </div>
-                    <a href="#" class="help-link">Butuh Bantuan?</a>
                 </div>
-                <button type="submit" class="btn-submit">Masuk</button>
-                <a href="forgot_password.php" class="forgot">Lupa Password</a>
+                <div class="form-group">
+                    <label for="confirm_password">Konfirmasi Kata Sandi</label>
+                    <div class="input-wrap">
+                        <span class="icon">&#128274;</span>
+                        <input type="password" name="confirm_password" id="confirm_password" placeholder="Masukkan Kata Sandi" required>
+                        <button type="button" class="toggle-pw" onclick="toggle('confirm_password')">&#128065;</button>
+                    </div>
+                    <p class="hint">Minimal 8 karakter dengan kombinasi huruf dan angka</p>
+                </div>
+                <button type="submit" class="btn-submit">Simpan Password</button>
             </form>
-            <p class="register-link">Belum punya akun? <a href="register.php">Daftar</a></p>
         </div>
     </div>
     <?php include 'layouts/footer.php'; ?>
     <script>
-    function togglePassword() {
-        var p = document.getElementById('password');
+    function toggle(id) {
+        var p = document.getElementById(id);
         p.type = p.type === 'password' ? 'text' : 'password';
     }
     </script>
