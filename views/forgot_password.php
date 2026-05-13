@@ -1,5 +1,5 @@
 <?php session_start(); ?>
-<?php include 'navbar.php'; ?>
+<?php include 'layouts/navbar.php'; ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -49,6 +49,6 @@
             <p class="back-link"><a href="login.php">&larr; Kembali ke Login</a></p>
         </div>
     </div>
-    <?php include 'footer.php'; ?>
+    <?php include 'layouts/footer.php'; ?>
 </body>
 </html>

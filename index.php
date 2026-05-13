@@ -1,11 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['logged_in'])) {
-    header('Location: view/login.php');
+    header('Location: views/login.php');
     exit;
 }
 ?>
-<?php include 'view/navbar.php'; ?>
+<?php include 'views/layouts/navbar.php'; ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -29,6 +29,6 @@ if (!isset($_SESSION['logged_in'])) {
             <a href="logout.php" class="btn-logout">Logout</a>
         </div>
     </div>
-    <?php include 'view/footer.php'; ?>
+    <?php include 'views/layouts/footer.php'; ?>
 </body>
 </html>

@@ -2,12 +2,12 @@
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../view/forgot_password.php');
+    header('Location: ../views/forgot_password.php');
     exit;
 }
 
 if (!isset($_SESSION['reset_email']) || !isset($_SESSION['otp_code'])) {
-    header('Location: ../view/forgot_password.php');
+    header('Location: ../views/forgot_password.php');
     exit;
 }
 
@@ -18,13 +18,13 @@ for ($i = 1; $i <= 6; $i++) {
 
 if (time() > ($_SESSION['otp_expiry'] ?? 0)) {
     $_SESSION['error'] = 'Kode OTP sudah kadaluarsa. Silakan kirim ulang.';
-    header('Location: ../view/forgot_verify_otp.php');
+    header('Location: ../views/forgot_verify_otp.php');
     exit;
 }
 
 if ($otp_input !== $_SESSION['otp_code']) {
     $_SESSION['error'] = 'Kode OTP salah. Silakan coba lagi.';
-    header('Location: ../view/forgot_verify_otp.php');
+    header('Location: ../views/forgot_verify_otp.php');
     exit;
 }
 
@@ -32,5 +32,5 @@ if ($otp_input !== $_SESSION['otp_code']) {
 $_SESSION['reset_verified'] = true;
 unset($_SESSION['otp_code'], $_SESSION['otp_expiry']);
 
-header('Location: ../view/reset_password.php');
+header('Location: ../views/reset_password.php');
 exit;

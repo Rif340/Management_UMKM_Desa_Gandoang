@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['reset_email'])) {
-    header('Location: ../view/forgot_password.php');
+    header('Location: ../views/forgot_password.php');
     exit;
 }
 
@@ -36,5 +36,5 @@ if ($USE_REAL_OTP) {
     }
 }
 
-header('Location: ../view/forgot_verify_otp.php');
+header('Location: ../views/forgot_verify_otp.php');
 exit;

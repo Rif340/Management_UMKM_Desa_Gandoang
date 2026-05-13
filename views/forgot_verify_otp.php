@@ -1,7 +1,7 @@
 <?php session_start();
 if (!isset($_SESSION['reset_email'])) { header('Location: forgot_password.php'); exit; }
 ?>
-<?php include 'navbar.php'; ?>
+<?php include 'layouts/navbar.php'; ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -55,7 +55,7 @@ if (!isset($_SESSION['reset_email'])) { header('Location: forgot_password.php');
             <p class="resend">Belum menerima kode? <a href="../proses/resend_forgot_otp.php">Kirim Ulang</a></p>
         </div>
     </div>
-    <?php include 'footer.php'; ?>
+    <?php include 'layouts/footer.php'; ?>
     <script>
     document.querySelectorAll('.otp-inputs input').forEach((input, i, inputs) => {
         input.addEventListener('input', () => { if (input.value && i < inputs.length - 1) inputs[i+1].focus(); });

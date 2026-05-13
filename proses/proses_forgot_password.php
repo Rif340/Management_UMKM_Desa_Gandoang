@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/../config/koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../view/forgot_password.php');
+    header('Location: ../views/forgot_password.php');
     exit;
 }
 
@@ -11,7 +11,7 @@ $email = trim($_POST['email'] ?? '');
 
 if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['error'] = 'Format email tidak valid.';
-    header('Location: ../view/forgot_password.php');
+    header('Location: ../views/forgot_password.php');
     exit;
 }
 
@@ -22,7 +22,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$user) {
     $_SESSION['error'] = 'Email tidak terdaftar.';
-    header('Location: ../view/forgot_password.php');
+    header('Location: ../views/forgot_password.php');
     exit;
 }
 
@@ -61,5 +61,5 @@ if ($USE_REAL_OTP) {
     }
 }
 
-header('Location: ../view/forgot_verify_otp.php');
+header('Location: ../views/forgot_verify_otp.php');
 exit;

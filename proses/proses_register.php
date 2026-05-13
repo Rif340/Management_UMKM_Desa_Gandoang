@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/../config/koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../view/register.php');
+    header('Location: ../views/register.php');
     exit;
 }
 
@@ -13,13 +13,13 @@ $email = trim($_POST['email'] ?? '');
 // Validasi server-side
 if (empty($nama) || empty($email)) {
     $_SESSION['error'] = 'Nama dan email wajib diisi.';
-    header('Location: ../view/register.php');
+    header('Location: ../views/register.php');
     exit;
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['error'] = 'Format email tidak valid.';
-    header('Location: ../view/register.php');
+    header('Location: ../views/register.php');
     exit;
 }
 
@@ -28,7 +28,7 @@ $stmt = $conn->prepare("SELECT id_user FROM user WHERE email = :email");
 $stmt->execute([':email' => $email]);
 if ($stmt->fetch()) {
     $_SESSION['error'] = 'Email sudah terdaftar. Silakan masuk.';
-    header('Location: ../view/register.php');
+    header('Location: ../views/register.php');
     exit;
 }
 
@@ -39,5 +39,5 @@ $_SESSION['reg_email'] = $email;
 // Kirim OTP
 require_once __DIR__ . '/send_otp.php';
 
-header('Location: ../view/verify_otp.php');
+header('Location: ../views/verify_otp.php');
 exit;

@@ -1,9 +1,8 @@
 <?php
 $base_url = '/Management_UMKM_Desa_Gandoang';
-// Deteksi base URL otomatis berdasarkan lokasi file
-$is_view = (strpos($_SERVER['SCRIPT_NAME'], '/view/') !== false);
+$is_view = (strpos($_SERVER['SCRIPT_NAME'], '/views/') !== false);
 $asset_path = $is_view ? '../asset' : 'asset';
-$view_path = $is_view ? '' : 'view/';
+$view_path = $is_view ? '' : 'views/';
 $root_path = $is_view ? '../' : '';
 ?>
 <link rel="preconnect" href="https://fonts.googleapis.com">

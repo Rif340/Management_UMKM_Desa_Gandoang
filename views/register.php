@@ -1,5 +1,5 @@
 <?php session_start(); ?>
-<?php include 'navbar.php'; ?>
+<?php include 'layouts/navbar.php'; ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -58,6 +58,6 @@
             <p class="login-link">Sudah punya akun? <a href="login.php">Masuk</a></p>
         </div>
     </div>
-    <?php include 'footer.php'; ?>
+    <?php include 'layouts/footer.php'; ?>
 </body>
 </html>

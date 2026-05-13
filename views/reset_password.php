@@ -1,7 +1,7 @@
 <?php session_start();
 if (!isset($_SESSION['reset_verified']) || !isset($_SESSION['reset_email'])) { header('Location: forgot_password.php'); exit; }
 ?>
-<?php include 'navbar.php'; ?>
+<?php include 'layouts/navbar.php'; ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -58,7 +58,7 @@ if (!isset($_SESSION['reset_verified']) || !isset($_SESSION['reset_email'])) { h
             </form>
         </div>
     </div>
-    <?php include 'footer.php'; ?>
+    <?php include 'layouts/footer.php'; ?>
     <script>
     function togglePw(id) {
         var p = document.getElementById(id);

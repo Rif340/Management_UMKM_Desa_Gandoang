@@ -1,7 +1,7 @@
 <?php session_start();
 if (!isset($_SESSION['reg_email'])) { header('Location: register.php'); exit; }
 ?>
-<?php include 'navbar.php'; ?>
+<?php include 'layouts/navbar.php'; ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -56,7 +56,7 @@ if (!isset($_SESSION['reg_email'])) { header('Location: register.php'); exit; }
             <p class="resend">Belum menerima kode? <a href="../proses/resend_otp.php">Kirim Ulang</a></p>
         </div>
     </div>
-    <?php include 'footer.php'; ?>
+    <?php include 'layouts/footer.php'; ?>
     <script>
     // Auto-focus next input
     document.querySelectorAll('.otp-inputs input').forEach((input, i, inputs) => {
