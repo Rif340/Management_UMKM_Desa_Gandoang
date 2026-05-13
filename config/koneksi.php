@@ -1,20 +1,19 @@
 <?php
 declare(strict_types=1);
 
-$host = "localhost";
-$db   = "nama_database";
+$host = "127.0.0.1";
+$port = 3306;
+$db   = "umkm_desa";
 $user = "root";
 $pass = "";
 
 try {
     $conn = new PDO(
-        "mysql:host=$host;dbname=$db;charset=utf8mb4",
+        "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4",
         $user,
         $pass
     );
-
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
 } catch (PDOException $e) {
     error_log($e->getMessage());
     die("Terjadi kesalahan pada server.");

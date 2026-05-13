@@ -1,107 +1,79 @@
+<?php session_start(); ?>
 <?php include 'navbar.php'; ?>
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Login Manajement UMKM Desa Gandoang</title>
-
+    <title>Masuk - UMKM Gandoang</title>
     <style>
-
-
-        body {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .pembungkus {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        form {
-            width: 90%;
-            max-width: 400px;
-            border: 1px solid black;
-            padding: 2rem;
-            box-sizing: border-box;
-        }
-
-        label {
-            display: block;
-            margin-top: 1rem;
-        }
-
-        input,
-        button {
-            width: 100%;
-            padding: 0.8rem;
-            box-sizing: border-box;
-            cursor: pointer;
-        }
-
-        .butuh_bantuan {
-            color: blue;
-            text-decoration: underline;
-            font-size: clamp(12px, 1.2vw, 14px);
-        }
-
-        form .lupa_password {
-            display: block;
-            margin-top: 1rem;
-            color: blue;
-            text-decoration: underline;
-            font-size: clamp(12px, 1.2vw, 14px);
-        }
-
-        .daftar{
-            margin-bottom:1rem;
-            font-size: clamp(12px, 1.2vw, 14px);
-        }
-
-        .daftar a{
-            color: blue;
-            text-decoration: underline;
-            font-size: clamp(12px, 1.2vw, 14px);
-        }
-
-        
+        body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; }
+        .main { flex: 1; background: url('../asset/images/bg-desa.png') center/cover no-repeat; display: flex; justify-content: center; align-items: center; padding: 2rem; }
+        .card { background: white; border-radius: 16px; padding: 2.5rem; width: 100%; max-width: 420px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .card .logo { text-align: center; margin-bottom: 0.5rem; }
+        .card .logo span { font-size: 0.7rem; font-weight: 600; letter-spacing: 2px; color: #2d5a3f; display: block; }
+        .card .logo h2 { font-size: 1.6rem; color: #2d5a3f; margin: 0; }
+        .card h1 { text-align: center; font-size: 1.4rem; color: #2d5a3f; margin: 0.8rem 0 0.3rem; }
+        .card .subtitle { text-align: center; font-size: 0.8rem; color: #666; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.4rem; }
+        .input-wrap { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 8px; padding: 0.7rem 1rem; gap: 0.6rem; }
+        .input-wrap input { border: none; outline: none; flex: 1; font-size: 0.9rem; font-family: 'Poppins', sans-serif; }
+        .input-wrap .icon { color: #999; font-size: 1.1rem; }
+        .toggle-pw { cursor: pointer; color: #999; border: none; background: none; font-size: 1.1rem; }
+        .help-link { display: block; font-size: 0.8rem; color: #333; margin-top: 0.4rem; text-decoration: none; }
+        .btn-submit { width: 100%; padding: 0.8rem; background: #2d5a3f; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 1rem; font-family: 'Poppins', sans-serif; }
+        .btn-submit:hover { background: #1e3d2b; }
+        .forgot { display: block; text-align: center; margin-top: 0.8rem; font-size: 0.85rem; color: #333; text-decoration: underline; }
+        .register-link { text-align: center; margin-top: 1.2rem; font-size: 0.85rem; color: #666; }
+        .register-link a { color: #2d5a3f; font-weight: 600; text-decoration: underline; }
+        .error-msg { background: #ffe0e0; color: #c00; padding: 0.6rem; border-radius: 6px; font-size: 0.8rem; margin-bottom: 1rem; text-align: center; }
     </style>
 </head>
-
 <body>
+    <div class="main">
+        <div class="card">
+            <div class="logo"><img src="../asset/images/logo.png" alt="UMKM Gandoang" style="height:60px;"></div>
+            <h1>Selamat Datang!</h1>
+            <p class="subtitle">Masuk untuk mengelola usaha UMKM Anda dengan lebih mudah</p>
 
-    <div class="pembungkus">
-        <form action="proses_login.php" method="post">
+            <?php if (isset($_SESSION['success'])): ?>
+                <div style="background:#e0ffe0;color:#060;padding:0.6rem;border-radius:6px;font-size:0.8rem;margin-bottom:1rem;text-align:center;"><?= htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?></div>
+            <?php endif; ?>
 
-            <center>
-                <h1>Masuk</h1>
-            </center>
+            <?php if (isset($_SESSION['error'])): ?>
+                <div class="error-msg"><?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?></div>
+            <?php endif; ?>
 
-            <label for="email">email</label>
-            <input type="email" placeholder="Masukan Email" id="email"><br>
-
-            <label for="password">kata sandi</label>
-            <input type="email" placeholder="Masukan Kata Sandi" id="password"><a href="#" class="butuh_bantuan">
-                Butuh Bantuan?</a><br><br>
-
-            <button type="submit">Masuk</button>
-
-            <center><a href="#" class="lupa_password">Lupa Password</a></center>
-        </form>
-
+            <form action="../proses/proses_login.php" method="POST">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-wrap">
+                        <span class="icon">&#128100;</span>
+                        <input type="email" name="email" id="email" placeholder="Masukkan Email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Kata Sandi</label>
+                    <div class="input-wrap">
+                        <span class="icon">&#128274;</span>
+                        <input type="password" name="password" id="password" placeholder="Masukkan Kata Sandi" required>
+                        <button type="button" class="toggle-pw" onclick="togglePassword()">&#128065;</button>
+                    </div>
+                    <a href="#" class="help-link">Butuh Bantuan?</a>
+                </div>
+                <button type="submit" class="btn-submit">Masuk</button>
+                <a href="forgot_password.php" class="forgot">Lupa Password</a>
+            </form>
+            <p class="register-link">Belum punya akun? <a href="register.php">Daftar</a></p>
+        </div>
     </div>
-
-    <center> <p class="daftar">Belum Punya Akun? <a href="#">Daftar</a></p></center>
-
+    <?php include 'footer.php'; ?>
+    <script>
+    function togglePassword() {
+        var p = document.getElementById('password');
+        p.type = p.type === 'password' ? 'text' : 'password';
+    }
+    </script>
 </body>
-
 </html>
-
-<?php include 'footer.php'; ?>
