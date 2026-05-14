@@ -110,8 +110,7 @@ $umkm_data = $umkm_result->fetchAll(PDO::FETCH_ASSOC);
 
                                 <label>
                                     <input 
-                                        type="radio" 
-                                        name="prioritas" 
+                                        type="radio" name="prioritas" 
                                         value="tinggi"
                                         <?= ($bantuan['prioritas'] == 'tinggi') ? 'checked' : ''; ?>
                                         required>

@@ -104,14 +104,14 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="wrapper">
 
         <!-- sidebar -->
-        <?php require_once __DIR__ . '/../../views/layouts/sidebar_usser.php'; ?>
+        <?php require_once __DIR__ . '/../../views/layouts/sidebar_user.php'; ?>
         <!-- akhir sidebar -->
 
         <!-- main -->
         <div class="main">
 
             <!-- navbar -->
-            <?php require_once __DIR__ . '/../../views/layouts/navbar_usser.php'; ?>
+            <?php require_once __DIR__ . '/../../views/layouts/navbar_user.php'; ?>
             <!-- akhir navbar -->
 
             <!-- content -->
