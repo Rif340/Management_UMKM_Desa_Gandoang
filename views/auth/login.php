@@ -1,5 +1,6 @@
 <?php session_start(); ?>
-<?php include 'layouts/navbar.php'; ?>
+<?php include '../layouts/navbar.php'; ?>
+<?php require_once __DIR__ . '/../../config/path_config.php'; ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -33,7 +34,7 @@
 <body>
     <div class="main">
         <div class="card">
-            <div class="logo"><img src="../asset/images/logo.png" alt="UMKM Gandoang" style="height:60px;"></div>
+            <div class="logo"><img src="<?= $asset_path ?>images/logo.png" alt="UMKM Gandoang" style="height:60px;"></div>
             <h1>Selamat Datang!</h1>
             <p class="subtitle">Masuk untuk mengelola usaha UMKM Anda dengan lebih mudah</p>
 
@@ -45,7 +46,7 @@
                 <div class="error-msg"><?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?></div>
             <?php endif; ?>
 
-            <form action="../proses/proses_login.php" method="POST">
+            <form action="../../controllers/AuthController.php?action=login" method="POST">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <div class="input-wrap">
@@ -60,7 +61,7 @@
                         <input type="password" name="password" id="password" placeholder="Masukkan Kata Sandi" required>
                         <button type="button" class="toggle-pw" onclick="togglePassword()">&#128065;</button>
                     </div>
-                    <a href="#" class="help-link">Butuh Bantuan?</a>
+                    <a href="https://api.whatsapp.com/send/?phone=6281312333735&text=Halo%2C+saya+butuh+bantuan+login+pada+umkm!&type=phone_number&app_absent=0" class="help-link">Butuh Bantuan?</a>
                 </div>
                 <button type="submit" class="btn-submit">Masuk</button>
                 <a href="forgot_password.php" class="forgot">Lupa Password</a>
@@ -68,7 +69,7 @@
             <p class="register-link">Belum punya akun? <a href="register.php">Daftar</a></p>
         </div>
     </div>
-    <?php include 'layouts/footer.php'; ?>
+    <?php include '../layouts/footer.php'; ?>
     <script>
     function togglePassword() {
         var p = document.getElementById('password');

@@ -18,7 +18,7 @@ footer .copyright { font-size: 0.75rem; opacity: 0.8; text-align: center; width:
         <div class="info">
             <h3>Sistem Manajemen UMKM Desa</h3>
             <p>Jl. Raya Cileungsi - Jonggol No.9, Gandoang, Kec. Cileungsi, Kabupaten Bogor, Jawa Barat 16820</p>
-            <p><a href="https://wa.me/6288211223344"><i class="bi bi-whatsapp"></i> 0882-1122-3344</a></p>
+            <p><a href="https://wa.me/6281312333735"><i class="bi bi-whatsapp"></i> 0813-1233-3735</a></p>
         </div>
     </div>
     <div class="copyright">&copy; 2026 Sistem Manajemen UMKM Desa</div>
