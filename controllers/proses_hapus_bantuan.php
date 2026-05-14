@@ -1,0 +1,25 @@
+<?php
+require_once __DIR__ . '/../config/koneksi.php';
+
+if (isset($_POST['submit'])) {
+
+    $id_kebutuhan = $_POST['id_kebutuhan'];
+
+    $stmt = $conn->prepare(
+        "UPDATE bantuan 
+         SET status = ? 
+         WHERE id_kebutuhan = ?"
+    );
+
+    if ($stmt->execute(['dihapus', $id_kebutuhan])) {
+        header("Location: ../views/layouts/bantuan.php?status=hapus_sukses");
+    } else {
+        header("Location: ../views/layouts/bantuan.php?status=hapus_gagal");
+    }
+
+    exit;
+
+} else {
+    header("Location: ../views/layouts/bantuan.php?status=invalid");
+    exit;
+}

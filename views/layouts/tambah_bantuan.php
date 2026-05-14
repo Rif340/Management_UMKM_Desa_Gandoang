@@ -34,39 +34,30 @@ $umkm_data = $umkm_result->fetchAll(PDO::FETCH_ASSOC);
 
                     <form action="../../controllers/proses_tambah_bantuan.php" method="post">
                         <h2 class="judul-form">Form Tambah Bantuan</h2>
+                        
                         <div class="form-bantuan">
-                            <label>Jenis</label>
-                            <span>:</span>
+                            <label>Jenis</label> <span>:</span>
                             <input type="text" name="jenis" class="form-control" required>
 
-                            <label>Deksripsi</label>
-                            <span>:</span>
+                            <label>Deksripsi</label> <span>:</span>
                             <textarea name="deskripsi" class="form-control" required></textarea>
 
-                            <label>Pilih UMKM</label>
-                            <span>:</span>
+                            <label>Pilih UMKM</label> <span>:</span>
+
                             <select name="id_umkm" class="form-select" required>
-
                                 <option value="">Pilih UMKM</option>
-
                                 <?php foreach ($umkm_data as $umkm): ?>
                                     <option value="<?= $umkm['id_umkm']; ?>">
                                         <?= htmlspecialchars($umkm['nama_umkm']); ?>
                                     </option>
                                 <?php endforeach; ?>
-
                             </select>
 
-                            <label>Prioritas</label>
-                            <span>:</span>
-                            <div class="prioritas">
+                            <label>Prioritas</label> <span>:</span>
 
+                            <div class="prioritas">
                                 <label>
-                                    <input
-                                        type="radio"
-                                        name="prioritas"
-                                        value="tinggi"
-                                        required>
+                                    <input type="radio" name="prioritas" value="tinggi" required>
                                     Tinggi
                                 </label>
 
@@ -76,8 +67,7 @@ $umkm_data = $umkm_result->fetchAll(PDO::FETCH_ASSOC);
                                 </label>
 
                                 <label>
-                                    <input
-                                        type="radio" name="prioritas" value="rendah">
+                                    <input type="radio" name="prioritas" value="rendah">
                                     Rendah
                                 </label>
 

@@ -176,6 +176,24 @@ body {
 }
 /* akhir pagination */
 
+/* tombol pencarian */
+.tombol_cari {
+  background-color: #618764;
+  color: #ffffff;
+  border: none;
+}
+
+.tombol_cari:hover {
+  background-color: #567759;
+  color: #ffffff;
+}
+
+.tombol_cari:focus {
+  box-shadow: none;
+  color: #ffffff;
+}
+/* akhir tombol pencarian */
+
 /* tombol tambah */
 #tambah {
   display: flex;

@@ -14,36 +14,71 @@ if ($page < 1) {
     $page = 1;
 }
 
+$search = $_GET['search'] ?? '';
 $offset = ($page - 1) * $limit;
 
-$total_result = $conn->query("SELECT COUNT(*) AS total FROM bantuan WHERE status != 'dihapus'");
-$total_row = $total_result->fetch(PDO::FETCH_ASSOC);
+$total_sql = "SELECT COUNT(*) AS total
+              FROM bantuan
+              LEFT JOIN umkm ON bantuan.id_umkm = umkm.id_umkm
+              LEFT JOIN user AS pengaju ON umkm.id_user = pengaju.id_user
+              LEFT JOIN user AS validator ON umkm.id_validator = validator.id_user
+              WHERE bantuan.status != 'dihapus'
+              AND (
+                    bantuan.jenis LIKE :search
+                    OR bantuan.prioritas LIKE :search
+                    OR bantuan.status LIKE :search
+                    OR bantuan.catatan LIKE :search
+                    OR bantuan.deskripsi LIKE :search
+                    OR umkm.nama_umkm LIKE :search
+                    OR pengaju.nama LIKE :search
+                    OR validator.nama LIKE :search
+              )";
+
+$total_stmt = $conn->prepare($total_sql);
+$total_stmt->execute([
+    ':search' => "%$search%"
+]);
+
+$total_row = $total_stmt->fetch(PDO::FETCH_ASSOC);
 $total_data = $total_row['total'];
 $total_page = ceil($total_data / $limit);
 
 $sql = "SELECT 
-        bantuan.*,
-        umkm.nama_umkm,
-        pengaju.nama AS nama_pengaju,
-        validator.nama AS nama_validator
-    FROM bantuan
+            bantuan.*,
+            umkm.nama_umkm,
+            pengaju.nama AS nama_pengaju,
+            validator.nama AS nama_validator
+        FROM bantuan
 
-    LEFT JOIN umkm 
-        ON bantuan.id_umkm = umkm.id_umkm
+        LEFT JOIN umkm 
+            ON bantuan.id_umkm = umkm.id_umkm
 
-    LEFT JOIN user AS pengaju
-        ON umkm.id_user = pengaju.id_user
+        LEFT JOIN user AS pengaju
+            ON umkm.id_user = pengaju.id_user
 
-    LEFT JOIN user AS validator
-        ON umkm.id_validator = validator.id_user
+        LEFT JOIN user AS validator
+            ON umkm.id_validator = validator.id_user
 
-    WHERE bantuan.status != 'dihapus'
+        WHERE bantuan.status != 'dihapus'
+        AND (
+            bantuan.jenis LIKE :search
+            OR bantuan.prioritas LIKE :search
+            OR bantuan.status LIKE :search
+            OR bantuan.catatan LIKE :search
+            OR bantuan.deskripsi LIKE :search
+            OR umkm.nama_umkm LIKE :search
+            OR pengaju.nama LIKE :search
+            OR validator.nama LIKE :search
+        )
 
-    LIMIT $limit OFFSET $offset
-";
+        LIMIT $limit OFFSET $offset";
 
-$result = $conn->query($sql);
-$data = $result->fetchAll(PDO::FETCH_ASSOC);
+$stmt = $conn->prepare($sql);
+$stmt->execute([
+    ':search' => "%$search%"
+]);
+
+$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -91,6 +126,7 @@ $data = $result->fetchAll(PDO::FETCH_ASSOC);
 
                     <!-- search -->
                     <div class="d-flex justify-content-between align-items-center mb-4">
+
                         <form method="get">
                             Show
                             <select name="limit" class="form-select d-inline-block w-auto" onchange="this.form.submit()">
@@ -99,10 +135,25 @@ $data = $result->fetchAll(PDO::FETCH_ASSOC);
                                 <option value="10" <?= ($limit == 10) ? 'selected' : '' ?>>10</option>
                             </select>
                             entries
+
+                            <input type="hidden" name="search" value="<?= htmlspecialchars($search) ?>">
                         </form>
-                        <div>
-                            <input type="text" class="form-control" placeholder="Cari Pengajuan...">
-                        </div>
+
+                        <form method="get" class="d-flex gap-2">
+                            <input type="hidden" name="limit" value="<?= $limit ?>">
+
+                            <input
+                                type="text"
+                                name="search"
+                                class="form-control"
+                                placeholder="Cari Pengajuan..."
+                                value="<?= htmlspecialchars($search) ?>">
+
+                            <button type="submit" class="btn tombol_cari">
+                                Cari
+                            </button>
+                        </form>
+
                     </div>
                     <!-- akhir search -->
 
@@ -119,9 +170,9 @@ $data = $result->fetchAll(PDO::FETCH_ASSOC);
                                     <th>jenis_bantuan</th>
                                     <th>tanggal_pengajuan</th>
                                     <th>tanggal_validasi</th>
-                                    <th>status</th>
-                                    <th>catatan</th>
+                                    <th>Catatan</th>
                                     <th>Deskripsi</th>
+                                    <th>status</th>
                                     <th>aksi</th>
                                 </tr>
                             </thead>
@@ -149,7 +200,7 @@ $data = $result->fetchAll(PDO::FETCH_ASSOC);
                                             </a>
 
                                             <a href="hapus_bantuan.php?id=<?= $row['id_kebutuhan'] ?>" class="btn btn-danger btn-sm">
-                                                <img src="<?= $asset_path ?>/icon/hapus.png" style="padding:5px" width="30px" height="30px">
+                                                <img src="<?= $asset_path ?>icon/hapus.png" style="padding:5px" width="30px" height="30px">
                                             </a>
                                         </td>
                                     </tr>
@@ -226,6 +277,39 @@ $data = $result->fetchAll(PDO::FETCH_ASSOC);
         </div>
     <?php endif; ?>
     <!-- akhir alert sukses -->
+
+
+    <!-- alert sukses mengedit -->
+
+    <!-- alert edit sukses -->
+    <?php if (isset($_GET['status']) && $_GET['status'] == 'edit_sukses'): ?>
+        <div class="alert_sukses_menambah">
+            <div class="box_sukses_menambah">
+                <div class="icon_sukses_menambah">
+                    <img src="<?= $asset_path ?>/icon/sukses.png" alt="Sukses">
+                </div>
+                <h2>Berhasil Mengedit</h2>
+                <p>Pengajuan Bantuan Berhasil Diperbarui</p>
+                <a href="bantuan.php" class="tombol_sukses_menambah">Tutup</a>
+            </div>
+        </div>
+    <?php endif; ?>
+    <!-- akhir alert edit sukses -->
+
+    <!-- alert sukses menghapus bantuan -->
+    <?php if (isset($_GET['status']) && $_GET['status'] == 'hapus_sukses'): ?>
+        <div class="alert_sukses_menambah">
+            <div class="box_sukses_menambah">
+                <div class="icon_sukses_menambah">
+                    <img src="<?= $asset_path ?>icon/hapus_alert.png" alt="Sukses">
+                </div>
+                <h2>Berhasil Menghapus</h2>
+                <p>Pengajuan Bantuan Berhasil Dihapus</p>
+                <a href="bantuan.php" class="tombol_sukses_menambah">Tutup</a>
+            </div>
+        </div>
+    <?php endif; ?>
+    <!-- akhir alert sukses menghapus bantuan -->
 
     <script src="<?= $asset_path ?>/js/bantuan.js"></script>
 
