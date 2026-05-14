@@ -1,9 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['logged_in'])) {
-    header('Location: views/login.php');
-    exit;
-}
+$is_logged_in = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
 ?>
 <?php include 'views/layouts/navbar.php'; ?>
 <!DOCTYPE html>
@@ -24,9 +21,14 @@ if (!isset($_SESSION['logged_in'])) {
 <body>
     <div class="main">
         <div class="welcome">
-            <h1>Selamat Datang, <?= htmlspecialchars($_SESSION['user_nama']) ?>!</h1>
-            <p>Anda berhasil masuk ke Sistem Manajemen UMKM Desa Gandoang.</p>
-            <a href="logout.php" class="btn-logout">Logout</a>
+            <?php if ($is_logged_in): ?>
+                <h1>Selamat Datang, <?= htmlspecialchars($_SESSION['user_nama']) ?>!</h1>
+                <p>Anda berhasil masuk ke Sistem Manajemen UMKM Desa Gandoang.</p>
+                <a href="/Management_UMKM_Desa_Gandoang/controllers/logout.php" class="btn-logout">Logout</a>
+            <?php else: ?>
+                <h1>Selamat Datang di UMKM Desa Gandoang!</h1>
+                <p>Silakan <a href="/Management_UMKM_Desa_Gandoang/views/auth/login.php" style="color:white;font-weight:700;">masuk</a> atau <a href="/Management_UMKM_Desa_Gandoang/views/auth/register.php" style="color:white;font-weight:700;">daftar</a> untuk mengakses fitur lengkap.</p>
+            <?php endif; ?>
         </div>
     </div>
     <?php include 'views/layouts/footer.php'; ?>

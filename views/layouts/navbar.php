@@ -1,10 +1,10 @@
 <?php
-$base_url = '/Management_UMKM_Desa_Gandoang';
-$is_view = (strpos($_SERVER['SCRIPT_NAME'], '/views/') !== false);
-$asset_path = $is_view ? '../asset' : 'asset';
-$view_path = $is_view ? '' : 'views/';
-$root_path = $is_view ? '../' : '';
+if (session_status() === PHP_SESSION_NONE) session_start();
+$is_logged_in = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
 ?>
+
+<?php require_once __DIR__ . '/../../config/path_config.php'; ?>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -22,15 +22,19 @@ nav { padding: 0.8rem 3rem; width: 100%; background-color: #2d5a3f; display: fle
 
 <nav>
     <div class="logo">
-        <a href="<?= $root_path ?>index.php">
-            <img src="<?= $asset_path ?>/images/logo.png" alt="UMKM Gandoang">
+        <a href="<?= $base_url ?>/index.php">
+            <img src="<?= $asset_path ?>images/logo.png" alt="UMKM Gandoang">
         </a>
     </div>
     <div class="menu">
         <a href="#">Lihat Product</a>
     </div>
     <div class="auth">
-        <a href="<?= $root_path ?><?= $view_path ?>login.php">Masuk</a>
-        <a href="<?= $root_path ?><?= $view_path ?>register.php">Daftar</a>
+        <?php if ($is_logged_in): ?>
+            <a href="<?= $base_url ?>/controllers/logout.php">Logout</a>
+        <?php else: ?>
+            <a href="<?= $view_path ?>auth/login.php">Masuk</a>
+            <a href="<?= $view_path ?>auth/register.php">Daftar</a>
+        <?php endif; ?>
     </div>
 </nav>

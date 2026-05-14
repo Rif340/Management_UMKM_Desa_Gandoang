@@ -1,2 +1,2 @@
-config/smtp_credentials.php
+config/otp_config.php
 vendor/

@@ -1,11 +1,11 @@
 <?php
-$USE_REAL_OTP = true;
+$USE_REAL_OTP = true; // Ganti ke true jika SMTP sudah siap
 
 // Konfigurasi SMTP (Gmail)
-$SMTP_HOST = 'smtp.gmail.com';
-$SMTP_PORT = 587;
-$SMTP_USER = 'halimjunior52@gmail.com';
-$SMTP_PASS = 'boko vcke jtot shar';
+$SMTP_HOST = 'sandbox.smtp.mailtrap.io';
+$SMTP_PORT = 2525;
+$SMTP_USER = 'd38b08e42484f8';
+$SMTP_PASS = '57cb6c34ae5694';
 $SMTP_FROM_NAME = 'UMKM Gandoang';
 
 // OTP Settings
