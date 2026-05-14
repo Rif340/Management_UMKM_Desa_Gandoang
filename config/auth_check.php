@@ -8,6 +8,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     $_SESSION['error'] = 'Silakan login terlebih dahulu.';
-    header('Location: ' . dirname($_SERVER['SCRIPT_NAME']) . '/../view/login.php');
+    header('Location: ' . dirname($_SERVER['SCRIPT_NAME']) . '/../views/login.php');
     exit;
 }
