@@ -92,10 +92,6 @@ Oleh karena itu, dirancang Sistem Manajemen UMKM Desa berbasis website sebagai s
 
 ## 👨‍💼 Kepala Desa Gandoang
 
-<p align="center">
-  <img src="https://drive.google.com/uc?export=view&id=1omTCay29hZP6RUnANeyS4awZJaCkLtWp" width="70%">
-</p>
-
 ### Pertanyaan
 
 > “Apakah di desa ini terdapat wadah untuk para UMKM?”
